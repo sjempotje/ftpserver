@@ -1,8 +1,12 @@
 const ftpd = require('@svrooij/ftpd')
 const fs = require('fs')
 const path = require('path')
+const express = require('express');
 
 require('dotenv').config()
+
+const app = express();
+app.use(express.static('public'));
 
 var keyFile
 var certFile
@@ -25,7 +29,8 @@ server = new ftpd.FtpServer(options.host, {
   getRoot: function (connection) {
     console.log('session username', connection.session.username)
     console.log('connecting to folder' + process.cwd())
-    const fullPath = path.join(__dirname, connection.session.username)
+    const fullPath = path.join(__dirname + '/public/' + connection.session.username)
+    console.log('fullPath', fullPath)
     //check if folder exists
     if (!fs.existsSync(fullPath)) {
         fs.mkdirSync(fullPath)
@@ -100,3 +105,23 @@ console.log('Listening on port ' + options.port)
 
 
 // Serve the files
+
+app.listen(3000, () => {
+  console.log('App listening on http://localhost:3000')
+}
+);
+
+//make a new get for every folder in the public folder
+fs.readdirSync('./public').forEach(folder => {
+  console.log('folder', folder)
+  app.get('/' + folder, (req, res) => {
+    //send every file in the folder
+    fs.readdirSync('./public/' + folder).forEach(file => {
+      console.log('file', file)
+      res.write('<a href="/' + folder + '/' + file + '">' + file + '</a><br>')
+    }
+    )
+    res.end()
+  })
+}
+)
