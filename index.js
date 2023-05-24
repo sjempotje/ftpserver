@@ -106,8 +106,8 @@ console.log('Listening on port ' + options.port)
 
 // Serve the files
 
-app.listen(3000, () => {
-  console.log('App listening on http://localhost:3000')
+app.listen(25583, () => {
+  console.log('App listening on http://localhost:25583')
 }
 );
 
