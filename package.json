@@ -1,0 +1,19 @@
+{
+  "name": "ftpserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@svrooij/ftpd": "^0.4.4",
+    "dotenv": "^16.0.3",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "typescript": "^5.0.4"
+  }
+}
